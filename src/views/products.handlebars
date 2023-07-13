@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="/css/products.css">
+
+<div>
+    <h2>Bienvenido {{user.name}}</h2>
+    <p>Mail: {{user.email}}</p>
+    <p>Rol:  {{user.role}} </p>
+    <button id="logout-btn">Logout</button>
+</div>
+
+{{#if products.docs.length}}
+    <div>
+        <h1>Productos</h1>
+        {{#each products.docs}}
+            <div class="product-container">
+                <p>Titulo: {{this.title}}</p>
+                <p>Descripcion: {{this.description}}</p>
+                <p>Precio: {{this.price}}</p>
+                <p>Codigo: {{this.code}}</p>
+                <p>Stock: {{this.stock}}</p>
+                <p>Categoria: {{this.category}}</p>
+            </div>
+        {{/each}}
+    </div>
+
+    <div>
+        {{#if products.hasPrevPage}}
+            <a href={{products.prevLink}}><<Página anterior</a>
+        {{/if}}
+        {{#if products.hasNextPage}}
+            <a href={{products.nextLink}}>Siguiente página>></a>
+        {{/if}} 
+    </div>
+
+{{else}}
+    <h1>No hay productos</h1>
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/home.js"></script>
+
+<script>
+    let logoutButton = document.getElementById("logout-btn")
+    logoutButton.addEventListener("click", (evt) => {
+        fetch('http://localhost:8080/api/sessions/logout', {method: 'post'})
+        .then( res => {
+        return window.location.replace('/login')
+        })
+    })
+</script>

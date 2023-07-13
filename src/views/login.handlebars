@@ -1,0 +1,19 @@
+<link rel="stylesheet" type="text/css" href="/css/login.css">
+
+<div class="login-container">
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label>Email</label>
+        <input name="email">
+        <br/>
+        <label>Contraseña</label>
+        <input type="password" name="password">
+        <input type="submit">
+    </form>
+    <div>
+        <a href='/api/session/github'><button>Entrar con GitHub</button></a>
+    </div>
+    <p>¿Olvidaste tu contraseña? <a href="/resetpassword">Recupérala aquí</a></p>
+    <p>¿No estás registrado? <a href="/register">Regístrate aquí</a></p>
+</div>
+<script src="/js/login.js"></script>

@@ -1,0 +1,13 @@
+<h1>Carritos: </h1>
+<div style="border: 1px solid #000; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem">
+    {{#each carts}}
+        <p> ID de Carrito: {{this.id}}</p>
+        <p> Productos: {{this.title}}</p>
+        {{#each cart}}
+            <p> Producto ID: {{this.id}}</p>
+            <p> Producto: {{this.product}}</p>
+        {{/each}}
+        <button>Vaciar Carrito</button>
+        <button>Borrar Carrito</button>
+    {{/each}}
+</div>

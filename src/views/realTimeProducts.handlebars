@@ -1,0 +1,36 @@
+<title>Real time</title>
+<link rel="stylesheet" href="/css/realTimeProduct.css">
+
+<h1>Real-time Products</h1>
+<form id="crearProductoForm" method="post">
+    <p>Formulario para agregar un producto:</p>
+    <input type="text" name="title" placeholder="Tituo del producto" required>
+    <input type="number" name="price" placeholder="Precio" required>
+    <input type="text" name="description" placeholder="Descripcion" required>
+    <input type="number" name="code" placeholder="Codigo" required>
+    <input type="number" name="stock" placeholder="Stock" required>
+    <input type="text" name="category" placeholder="Categoria" required>
+    <button type="submit">Crear producto</button>
+</form>
+        
+<h1>Lista de productos: </h1>
+{{#if products.docs.length}}
+    <div>
+        {{#each products.docs}}
+            <div id="products-container" style="border: 1px solid #000; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem">
+                <p>Titulo: {{this.title}}</p>
+                <p>Descripcion: {{this.description}}</p>
+                <p>Precio: {{this.price}}</p>
+                <p>Codigo: {{this.code}}</p>
+                <p>Stock: {{this.stock}}</p>
+                <p>Categoria: {{this.category}}</p>
+            </div>
+        {{/each}}
+    </div>
+{{else}}
+    <h1>No hay productos</h1>
+{{/if}}
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/home.js"></script>
