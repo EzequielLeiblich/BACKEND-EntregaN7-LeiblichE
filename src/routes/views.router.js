@@ -101,8 +101,7 @@ router.get('/register', async (req, res) => {
 router.get("/profile", (req, res) => {
   console.log(req.session);
   res.render("profile", {
-    user: req.session.user,
-    isAdmin: req.session.user.rol === "admin",
+    user: req.session.user
   });
 });
 

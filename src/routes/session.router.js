@@ -42,19 +42,18 @@ router.get("api/sessions/faillogin", (req, res) => {
 
 router.post("/restartPassword", async (req, res) => {
   const { email, password } = req.body;
-
   if (!email || !password)
       return res
           .status(400)
           .send({ status: "error", message: "Complete los campos" });
-  const user = await UsersManagers.getUser(email);
+  const user = await userManager.getUser(email);
 
   if (!user)
       return res
           .status(400)
           .send({ status: "error", message: "Usuario no Encontrado" });
   const newHashedPassword = createHash(password);
-  const pass = await UsersManagers.updatePasswordUser(
+  const pass = await userManager.updatePasswordUser(
       user,
       newHashedPassword
   );

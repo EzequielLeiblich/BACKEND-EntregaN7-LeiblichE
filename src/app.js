@@ -25,11 +25,10 @@ import UserManager from './daos/mongodb/UserManager.class.js'
 
 const productManager = new ProductManager();
 const messageManager = new MessageManager();
-const userManager = new UserManager();
 const mensajes = [];
+// const userManager = new UserManager();
 
 // initial configuration
-
 
 const app = express();
 // connectDB();
@@ -115,7 +114,7 @@ socketServer.on("connection", async (socket) => {
 
   // Usuarios
 
-  let userManager = new UserManager()
+  // let userManager = new UserManager()
 
   socket.on("authenticatedUser", (data) => {
     socket.broadcast.emit("newUserAlert", data);
