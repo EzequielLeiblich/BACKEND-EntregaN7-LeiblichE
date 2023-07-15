@@ -7,53 +7,72 @@ const userManager = new UserManager();
 const router = Router();
 
 router.post("/register", async (req, res) => {
-  const { first_name, last_name, email, age, password } = req.body;
-  const exists = await userModel.findOne({ email });
-  if (exists)
+  const data = req.body;
+  let response = await userManager.createUser(data);
+  if (response === false) {
       return res
-      .status(400)
-      .send({ status: "error", message: "usuario ya registrado" });
-  let result = await userModel.create({
-      first_name,
-      last_name,
-      email,
-      age,
-      password: createHash(password),
-  });
-  res.send({ status: "success", message: "usuario  registrado" });
+          .status(400)
+          .send({ status: "error", message: "El usuario ya existe" });
+  } else {
+      res.send({ status: "success", message: "usuario  registrado" });
+  }
 });
 
-router.post("/login", async (req, res) => {
-  let { email, password } = req.body
-  if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
-    req.session.user = {
-      name: "Admin",
-      email: "adminCoder@coder.com",
-      role: "admin"
-    }
-    return res.send({status: "success", user: req.session.user})
+router.post(
+  "/login",
+  passport.authenticate("login", { failureRedirect: "/faillogin" }),
+  async (req, res) => {
+      if (!req.user)
+          return res
+              .status(400)
+              .send({ status: "error", message: "Invalid credentials" });
+      req.session.user = {
+          name: req.user.first_name + " " + req.user.last_name,
+          email: req.user.email,
+          age: req.user.age,
+          role: req.user.rol,
+      };
+      return res.send({ status: "success", payload: req.user });
   }
-  let user = await userManager.findUser(email, password)
-  if (!user) {
-    return res.status(400).send({status: "error", details: "User can't be found"})
-  }
-  req.session.user = {
-    name: `${user.first_name} ${user.last_name}`,
-    email: user.email,
-    age: user.age,
-    role: "user"
-  }
-  res.send({status: "success", user: req.session.user})
-})
+);
 
-router.post('/resetpassword',async(req,res)=>{
-  const {email,password} = req.body;
-  if(!email||!password) return res.status(400).send({status:"error",error:"Incomplete Values"});
-  const user = await userModel.findOne({email});
-  if(!user) return res.status(404).send({status:"error",error:"Not user found"});
+router.get("api/sessions/faillogin", (req, res) => {
+  res.send({ error: "Failed to login" });
+});
+
+router.post("/restartPassword", async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password)
+      return res
+          .status(400)
+          .send({ status: "error", message: "Complete los campos" });
+  const user = await UsersManagers.getUser(email);
+
+  if (!user)
+      return res
+          .status(400)
+          .send({ status: "error", message: "Usuario no Encontrado" });
   const newHashedPassword = createHash(password);
-  await userModel.updateOne({_id:user._id},{$set:{password:newHashedPassword}});
-  res.send({status:"success",message:"Contraseña restaurada"});
+  const pass = await UsersManagers.updatePasswordUser(
+      user,
+      newHashedPassword
+  );
+  console.log("esto es pass", pass);
+  if (pass === true) {
+      return res.status(200).send({
+          status: "success",
+          message: "Contraseña restaurada",
+      });
+  } else {
+      return res
+          .status(400)
+          .send({
+              status: "error",
+              message:
+                  "Problemas al cambiar la Contraseña intente denuevo mas tarde",
+          });
+  }
 });
 
 router.get(
@@ -62,11 +81,15 @@ router.get(
   (req, res) => {}
 );
 
-router.get('/githubcallback',passport.authenticate('github', {failureRedirect: '/login'}),async (req, res)=>{
-  console.log('exito')
-  req.session.user = req.user
-  res.redirect('/')
-});
+router.get(
+  "/githubcallback",
+  passport.authenticate("github", { failureRedirect: "/" }),
+  async (req, res) => {
+      console.log("exito");
+      req.session.user = req.user;
+      res.redirect("/home");
+  }
+);
 
 router.post('/logout', async (req, res) => {
   req.session.destroy((err) => {

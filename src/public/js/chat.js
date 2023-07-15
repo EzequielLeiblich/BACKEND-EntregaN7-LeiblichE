@@ -1,49 +1,54 @@
 const socket = io();
+let user;
 
-let sendMsgBtn = document.getElementById("send-message-btn")
-let messageInput = document.getElementById("message-input")
-
-let user = ""
-
-// Identificacion de usuario
+const chatbox = document.getElementById("chatbox");
+const messageLogs = document.getElementById("messageLogs");
+const button = document.getElementById("enviar");
 
 Swal.fire({
-    title: "E-mail",
-    input: "email",
+    title: "Identificate",
+    input: "text",
     inputValidator: (value) => {
-        if (!value) {
-        return "Escribir un email para identificarte"
-        }
-        return false
+        return !value && "necesitas escribir un nombre para identificarte";
     },
     allowOutsideClick: false,
-    }).then((result) => {
+}).then((result) => {
+    console.log(result.value);
     user = result.value;
+    socket.emit("authenticatedUser", user);
 });
 
-// Socket.on
-
-socket.on("update-messages", (messages) => {
-    let chatContainer = document.getElementById("chat-container")
-    chatContainer.innerHTML = ""
-
-    for (message of messages) {
-        let messageElement = document.createElement("p")
-        messageElement.innerHTML = `${message.user}: ${message.message}`
-
-        chatContainer.appendChild(messageElement)
+chatbox.addEventListener("keyup", (evt) => {
+    if (evt.key === "Enter") {
+        enviar();
     }
-})
+});
 
-// Event listeners
+button.onclick = () => {
+    enviar();
+};
 
-messageInput.addEventListener("keypress", (event) => {
-    if (event.key === "Enter") {
-        sendMsgBtn.click();
-    }
-})
+function enviar() {
+    socket.emit("message", { user: user, message: chatbox.value });
+    chatbox.value = "";
+}
 
-sendMsgBtn.addEventListener('click', () => {
-    socket.emit("new-message", {user: user, message: messageInput.value})
-    messageInput.value = ""
-})
+socket.on("imprimir", (data) => {
+    let mensajes = "";
+    data.forEach((msj) => {
+        mensajes += `${msj.user}:  ${msj.message}<br/>`;
+    });
+    messageLogs.innerHTML = mensajes;
+});
+
+socket.on("newUserAlert", (data) => {
+    if (!user) return;
+    Swal.fire({
+        toast: true,
+        position: "center",
+        showConfirmButton: false,
+        timer: 5000,
+        title: data + " se ha unido al chat",
+        icon: "success",
+    });
+});

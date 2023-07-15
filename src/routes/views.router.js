@@ -9,20 +9,40 @@ const router = express.Router();
 let productManager = new ProductManager();
 let cartManager = new CartManager();
 
+router.get("/home", async (req, res) => {
+  let limit = Number(req.query.limit);
+  let page = Number(req.query.page);
+  let sort = Number(req.query.sort);
+  let filtro = req.query.filtro;
+  let filtroVal = req.query.filtroVal;
+  if (!limit) {
+    limit = 9;
+  }
+  if (!page) {
+    page = 1;
+  }
+  await productManager.getProduct(limit, page, sort, filtro, filtroVal).then(
+    (product) => {
+      let products = JSON.stringify(product.docs);
+      products = JSON.parse(products);
+      product.prevLink = product.hasPrevPage
+        ? `http://localhost:8080/home/?page=${product.prevPage}`
+        : "";
+      product.nextLink = product.hasNextPage
+        ? `http://localhost:8080/home/?page=${product.nextPage}`
+        : "";
+      product.isValid = !(page <= 0 || page > product.totalPages);
+      res.render("home", {
+        title: "Productos",
+        user: req.session.user,
+        product,
+      });
+    }
+  );
+});
+
 router.get('/', async(req, res) => {
-  let limit = req.query.limit || 10;
-  const page = req.query.page || 1;
-  let result = await productManager.getProducts(limit, page);
-  let prod = result.docs;
-  console.log(result.docs);
-  res.render('home', {
-    products: prod,
-    hasPrevPage: result.hasPrevPage,
-    hasNextPage: result.hasNextPage,
-    nextPage: result.nextPage,
-    prevPage: result.prevPage,
-    page: result.page
-  });
+  res.render("login");
 });
 
 router.get('/api/products', async(req, res) => {
@@ -78,19 +98,26 @@ router.get('/register', async (req, res) => {
   res.render('register')
 });
 
-router.get('/profile', (req, res) => {
-  res.render('profile', {
-      user: req.session.user
+router.get("/profile", (req, res) => {
+  console.log(req.session);
+  res.render("profile", {
+    user: req.session.user,
+    isAdmin: req.session.user.rol === "admin",
   });
 });
 
-router.get('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
-      return res.json({ status: 'Logout ERROR', body: err })
-    }
-    return res.redirect('/login')
-  });
+router.get("/logout", (req, res) => {
+  if (req.session) {
+      req.session.destroy((err) => {
+          if (err) {
+              res.status(400).send("Unable to log out");
+          } else {
+              res.redirect("/");
+          }
+      });
+  } else {
+      res.redirect("/");
+  }
 });
 
 router.get('/resetpassword',(req,res)=>{

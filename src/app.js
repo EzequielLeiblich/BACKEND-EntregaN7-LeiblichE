@@ -10,6 +10,7 @@ import session from 'express-session'
 import sessionRouter from "./routes/session.router.js";
 
 import { Server } from "socket.io";
+import { engine } from "express-handlebars";
 
 import ProductManager from './daos/mongodb/ProductManager.class.js'
 import MessageManager from './daos/mongodb/MessageManager.class.js'
@@ -19,18 +20,19 @@ import MongoStore from 'connect-mongo'
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import passport from 'passport';
-import initializePassport from './config/passport.config.js';
+import { initializePassport } from './config/passport.config.js';
 import UserManager from './daos/mongodb/UserManager.class.js'
 
 const productManager = new ProductManager();
 const messageManager = new MessageManager();
 const userManager = new UserManager();
+const mensajes = [];
 
 // initial configuration
 
 
 const app = express();
-connectDB();
+// connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -62,7 +64,7 @@ app.use(
   })
 );
 
-// app.use(passport.initialize());
+app.use(passport.initialize());
 // app.use(passport.session());
 
 // server start and socket io
@@ -135,6 +137,6 @@ app.use("/", routerViews);
 app.use("/api/products", routerProducts);
 app.use("/api/carts", routerCarts);
 app.use("/api/messages", routerMessages);
-app.use("/api/session", sessionRouter)
+app.use("/api/sessions", sessionRouter)
 
 export default initializePassport;

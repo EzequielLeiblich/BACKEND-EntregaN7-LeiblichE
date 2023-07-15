@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { productsModel } from "./models/products.model.js";
 
 export default class ProductManager {
-    // connection = mongoose.connect('mongodb+srv://ezequielleiblich:1Q2w3e4r@leibliche.nmve4kb.mongodb.net/?retryWrites=true&w=majority')
+    connection = mongoose.connect('mongodb+srv://ezequielleiblich:1Q2w3e4r@leibliche.nmve4kb.mongodb.net/?retryWrites=true&w=majority')
     async addProduct(product) {
         try {
             let result = await productsModel.create(product)
