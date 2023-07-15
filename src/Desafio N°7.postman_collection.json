@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "21095273-b68c-439b-beb5-453d8f9b6445",
+		"name": "Desafio N°7",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27482621"
+	},
+	"item": [
+		{
+			"name": "productos",
+			"item": [
+				{
+					"name": "ver productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/products",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver producto por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/products/64a0fc5cb187f6378acc0835",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"64a0fc5cb187f6378acc0835"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "agregar producto nuevo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"prueba\",\r\n    \"description\": \"prueba de repuesto para vehículos\",\r\n    \"code\": \"PF-005\",\r\n    \"price\": 9.99,\r\n    \"status\": true,\r\n    \"stock\": 99,\r\n    \"category\": \"Repuestos\",\r\n    \"thumbnails\": [\r\n        \"https://example.com/images/prueba_1.jpg\",\r\n        \"https://example.com/images/prueba_2.jpg\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/products",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar producto por id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/products/649b4298e3f68eadb4bb407c",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"649b4298e3f68eadb4bb407c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar producto por campo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"title\": \"prueba 2\",\r\n        \"description\": \"2da prueba de repuesto para vehículos\",\r\n        \"code\": \"PF-005\",\r\n        \"price\": 0.99,\r\n        \"status\": true,\r\n        \"stock\": 99,\r\n        \"category\": \"Repuestos\",\r\n        \"thumbnails\": [\r\n            \"https://example.com/images/prueba_1.jpg\",\r\n            \"https://example.com/images/prueba_2.jpg\"\r\n        ]\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/products/6498fc540433aeddefc66054",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"products",
+								"6498fc540433aeddefc66054"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "carritos",
+			"item": [
+				{
+					"name": "ver lista de carritos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver lista de productos por id de carrito",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/64a103c60c1cc547c6e2ea0c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"64a103c60c1cc547c6e2ea0c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear nuevo carrito",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/carts",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "agregar producto al carrito seleccionado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/64a103c60c1cc547c6e2ea0c/product/64a0fc5cb187f6378acc0835",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"64a103c60c1cc547c6e2ea0c",
+								"product",
+								"64a0fc5cb187f6378acc0835"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar carrito por id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/64a103c60c1cc547c6e2ea0c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"64a103c60c1cc547c6e2ea0c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar producto del carrito",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/64a103c60c1cc547c6e2ea0c/product/64a0fc5cb187f6378acc0835",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"64a103c60c1cc547c6e2ea0c",
+								"product",
+								"64a0fc5cb187f6378acc0835"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "limpiar carrito por id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/carts/64a103c60c1cc547c6e2ea0c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"64a103c60c1cc547c6e2ea0c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar cantidad de productos en carrito",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"product\":\"64a0fc5cb187f6378acc0835\",\r\n        \"quantity\":10,\r\n        \"_id\":\"64a104810c1cc547c6e2ea14\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/carts/64a103c60c1cc547c6e2ea0c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"carts",
+								"64a103c60c1cc547c6e2ea0c"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "messages",
+			"item": [
+				{
+					"name": "ver mensajes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear mensaje",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"user\": \"prueba\",\r\n        \"message\": \"mensaje deprueba\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/messages",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"messages"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
