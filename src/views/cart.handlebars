@@ -1,0 +1,48 @@
+<div class="container">
+    <nav class="nav m-5 justify-content-center">
+        <a class="nav-link" aria-current="page" href="/home">
+            Home
+        </a>
+        <a class="nav-link" aria-current="page" href="/login">
+            Login
+        </a>
+        <a class="nav-link" aria-current="page" href="/chat">
+            Chat
+        </a>
+        <a class="nav-link" aria-current="page" href="/api/carts">
+            Carritos
+        </a>
+        <a class="nav-link" aria-current="page" href="/api/products">
+            Productos
+        </a>
+        <a class="nav-link" aria-current="page" href="/realtimeproducts">
+            Real Time Products
+        </a>
+        <a class="nav-link" aria-current="page" href="/profile">
+            Perfil de Usuario
+        </a>
+    </nav>
+    <div class="row">
+        {{#each products}}
+        <div class="container-fluid col">
+            <div class="card m-5" style="width: 18rem;">
+            <img src="{{product.thumbnail}}" class="card-img-top" alt="..." />
+            <div class="card-body">
+                <h5 class="card-title">
+                {{product.title}}
+                </h5>
+                <p class="card-text">
+                {{product.descripcion}}
+                </p>
+                <h5>
+                ${{product.price}}
+                </h5>
+                <h5>
+                {{quantity}} unidades
+                </h5>
+            </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
