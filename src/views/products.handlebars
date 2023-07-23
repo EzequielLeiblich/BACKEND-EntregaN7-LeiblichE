@@ -1,0 +1,64 @@
+<link rel="stylesheet" type="text/css" href="/css/products.css">
+<nav class="nav m-5 justify-content-center">
+    <a class="nav-link" aria-current="page" href="/home">
+        Home
+    </a>
+    <a class="nav-link" aria-current="page" href="/login">
+        Login
+    </a>
+    <a class="nav-link" aria-current="page" href="/chat">
+        Chat
+    </a>
+    <a class="nav-link" aria-current="page" href="/api/carts">
+        Carritos
+    </a>
+    <a class="nav-link" aria-current="page" href="/api/products">
+        Productos
+    </a>
+    <a class="nav-link" aria-current="page" href="/realtimeproducts">
+        Real Time Products
+    </a>
+    <a class="nav-link" aria-current="page" href="/profile">
+        Perfil de Usuario
+    </a>
+</nav>
+{{#if products.docs.length}}
+    <div>
+        <h1>Productos</h1>
+        {{#each products.docs}}
+            <div class="product-container">
+                <p>Titulo: {{this.title}}</p>
+                <p>Descripcion: {{this.description}}</p>
+                <p>Precio: {{this.price}}</p>
+                <p>Codigo: {{this.code}}</p>
+                <p>Stock: {{this.stock}}</p>
+                <p>Categoria: {{this.category}}</p>
+            </div>
+        {{/each}}
+    </div>
+
+    <div>
+        {{#if products.hasPrevPage}}
+            <a href={{products.prevLink}}><<Página anterior</a>
+        {{/if}}
+        {{#if products.hasNextPage}}
+            <a href={{products.nextLink}}>Siguiente página>></a>
+        {{/if}} 
+    </div>
+
+{{else}}
+    <h1>No hay productos</h1>
+{{/if}}
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/home.js"></script>
+
+<script>
+    let logoutButton = document.getElementById("logout-btn")
+    logoutButton.addEventListener("click", (evt) => {
+        fetch('http://localhost:8080/api/sessions/logout', {method: 'post'})
+        .then( res => {
+        return window.location.replace('/login')
+        })
+    })
+</script>

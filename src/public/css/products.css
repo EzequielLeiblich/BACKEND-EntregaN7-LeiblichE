@@ -1,0 +1,38 @@
+body {
+    font-family: "Arial", sans-serif;
+    color: #487058;
+}
+
+h1 {
+    color: #487058;
+    text-align: center;
+}
+
+.product-container {
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.product-container p {
+    margin: 0;
+}
+
+.product-container p:first-child {
+    font-weight: bold;
+}
+
+.pagination-link {
+    display: inline-block;
+    margin: 0 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #b2cdbe;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    color: #487058;
+}
+
+.pagination-link:hover {
+    background-color: #ccc;
+}
