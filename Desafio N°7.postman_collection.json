@@ -340,13 +340,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/messages",
+							"raw": "http://localhost:8080/api/messages",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"api",
 								"messages"
 							]
 						}
@@ -360,7 +361,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n        \"user\": \"prueba\",\r\n        \"message\": \"mensaje deprueba\"\r\n    }",
+							"raw": "{\r\n        \"user\": \"Usuario\",\r\n        \"message\": \"Escriba el mensaje\"\r\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -368,16 +369,54 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/messages",
+							"raw": "http://localhost:8080/api/messages",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
+								"api",
 								"messages"
 							]
 						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "ver usuarios",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "crear usuario",
+					"request": {
+						"method": "POST",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "eliminar usuario",
+					"request": {
+						"method": "DELETE",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "cambiar contraseña",
+					"request": {
+						"method": "PUT",
+						"header": []
 					},
 					"response": []
 				}
